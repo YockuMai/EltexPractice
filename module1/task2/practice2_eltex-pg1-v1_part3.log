@@ -1,0 +1,198 @@
+root@eltex-practice2-pg1-v1:~# git config --global user.name "YockuMai"
+root@eltex-practice2-pg1-v1:~# git config --global user.email "nikita_anisimov66@mail.ru"
+root@eltex-practice2-pg1-v1:~# git config --global init.defaultBranch main
+
+root@eltex-practice2-pg1-v1:~# apt install git gh -y
+
+root@eltex-practice2-pg1-v1:~# ssh-keygen -t ed25519 -f ~/.ssh/YockuMai
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/YockuMai
+Your public key has been saved in /root/.ssh/YockuMai.pub
+The key fingerprint is:
+SHA256:kKMsuqtaeJ6EPVvqPlD0fgFICZjpqO9db+xX2ERnmpo root@eltex-practice2-pg1-v1
+The key's randomart image is:
++--[ED25519 256]--+
+|o=.o             |
+|+ + .  .    . o  |
+|o. . .+    . =   |
+|.......o    +    |
+|....o  .S  *     |
+|o= .. .   E o    |
+|+o* ....   .     |
+| *oB . .o .      |
+|B=O..  oo.       |
++----[SHA256]-----+
+
+root@eltex-practice2-pg1-v1:~# gh auth login
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations on this host? SSH
+? Upload your SSH public key to your GitHub account? /root/.ssh/YockuMai.pub
+? Title for your SSH key: eltex-practice2-pg1-v1
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: 68E1-A958
+Press Enter to open github.com in your browser...
+! Failed opening a web browser at https://github.com/login/device
+  exec: "xdg-open,x-www-browser,www-browser,wslview": executable file not found in $PATH
+  Please try entering the URL in your browser manually
+✓ Authentication complete.
+- gh config set -h github.com git_protocol ssh
+✓ Configured git protocol
+! Authentication credentials saved in plain text
+✓ Uploaded the SSH key to your GitHub account: /root/.ssh/YockuMai.pub
+✓ Logged in as YockuMai
+
+root@eltex-practice2-pg1-v1:~# gh auth setup-git --hostname github.com
+root@eltex-practice2-pg1-v1:~# gh auth status
+github.com
+  ✓ Logged in to github.com account YockuMai (/root/.config/gh/hosts.yml)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: gho_************************************
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo'
+
+root@eltex-practice2-pg1-v1:~# gh repo create --public EltexPracticeModule1
+✓ Created repository YockuMai/EltexPracticeModule1 on GitHub
+  https://github.com/YockuMai/EltexPracticeModule1
+root@eltex-practice2-pg1-v1:~# mkdir ~/EltexPracticeModule1 && cd ~/EltexPracticeModule1
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# echo "# Репозиторий для практик первого модуля" >> README.md
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git init
+Initialized empty Git repository in /root/EltexPracticeModule1/.git/
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git add README.md
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git commit -m "first commit"
+[main (root-commit) c90b7b9] first commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git branch -M main
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git remote add origin https://github.com/YockuMai/EltexPracticeModule1.git
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git status
+On branch main
+nothing to commit, working tree clean
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git push -u origin main
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 282 bytes | 282.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/YockuMai/EltexPracticeModule1.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# mkdir -p module1/task1
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# mkdir -p module1/task2
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# mkdir -p module1/task3
+
+eltex-pg1-v1@eltex-2026-autumn:~$ scp eltex-pg1-v1_part2.log root@172.16.9.175:~/EltexPracticeModule1/module1/task2
+eltex-pg1-v1_part2.log                                                                100% 6387    17.0MB/s   00:00
+eltex-pg1-v1@eltex-2026-autumn:~$ scp eltex-pg1-v1_part3.log root@172.16.9.175:~/EltexPracticeModule1/module1/task3
+eltex-pg1-v1_part3.log                                                                100% 2309     6.5MB/s   00:00
+eltex-pg1-v1@eltex-2026-autumn:~$ scp eltex-pg1-v1_part3_gt20M.log root@172.16.9.175:~/EltexPracticeModule1/module1/task
+3
+eltex-pg1-v1_part3_gt20M.log                                                          100% 1077     3.1MB/s   00:00
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git add .
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   module1/task2/eltex-pg1-v1_part2.log
+        new file:   module1/task3/eltex-pg1-v1_part3.log
+        new file:   module1/task3/eltex-pg1-v1_part3_gt20M.log
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git commit -m "Файлы первой практики по второму и третьему заданиям"
+[main 90f6565] Файлы первой практики по второму и третьему заданиям
+ 3 files changed, 323 insertions(+)
+ create mode 100644 module1/task2/eltex-pg1-v1_part2.log
+ create mode 100644 module1/task3/eltex-pg1-v1_part3.log
+ create mode 100644 module1/task3/eltex-pg1-v1_part3_gt20M.log
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git push
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 3.38 KiB | 3.38 MiB/s, done.
+Total 8 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/YockuMai/EltexPracticeModule1.git
+   c90b7b9..90f6565  main -> main
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# mkdir ~/EltexPracticeModule1_clone && cd ~/EltexPracticeModule1_clone
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1_clone# git clone https://github.com/YockuMai/EltexPracticeModule1.git
+ .
+Cloning into '.'...
+remote: Enumerating objects: 11, done.
+remote: Counting objects: 100% (11/11), done.
+remote: Compressing objects: 100% (10/10), done.
+remote: Total 11 (delta 0), reused 11 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (11/11), done.
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# mkdir -p module2/task1
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# mkdir module2/task2
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# mkdir module2/task3
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# cp ~/practice2_eltex-pg1-v1_part1.log module2/task1
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# cp ~/practice2_eltex-pg1-v1_part2.log module2/task2
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# cp ~/practice2_eltex-pg1-v1_part3.log module2/task3
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git add .
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git commit -m "Файлы по второй практике"
+[main 9982f2a] Файлы по второй практике
+ 3 files changed, 3027 insertions(+)
+ create mode 100644 module2/task1/practice2_eltex-pg1-v1_part1.log
+ create mode 100644 module2/task2/practice2_eltex-pg1-v1_part2.log
+ create mode 100644 module2/task3/practice2_eltex-pg1-v1_part3.log
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1# git push
+Enumerating objects: 10, done.
+Counting objects: 100% (10/10), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 35.91 KiB | 11.97 MiB/s, done.
+Total 9 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/YockuMai/EltexPracticeModule1.git
+   90f6565..9982f2a  main -> main
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1_clone# git fetch
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 9 (delta 0), reused 9 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (9/9), 35.89 KiB | 371.00 KiB/s, done.
+From https://github.com/YockuMai/EltexPracticeModule1
+   90f6565..9982f2a  main       -> origin/main
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1_clone# git log origin/main
+commit 9982f2adab800039843dcb99c4e7737dda82daf5 (origin/main, origin/HEAD)
+Author: YockuMai <nikita_anisimov66@mail.ru>
+Date:   Tue Oct 20 09:07:49 2026 +0000
+
+    Файлы по второй практике
+
+commit 90f656572447cdc88e5c105c8bac9765fad3137b (HEAD -> main)
+Author: YockuMai <nikita_anisimov66@mail.ru>
+Date:   Tue Oct 20 09:01:33 2026 +0000
+
+    Файлы первой практики по второму и третьему заданиям
+
+commit c90b7b995fcaaa9346ad2d34f92a7d9b9a24f04e
+Author: YockuMai <nikita_anisimov66@mail.ru>
+Date:   Tue Oct 20 08:56:33 2026 +0000
+
+    first commit
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1_clone# git merge
+Updating 90f6565..9982f2a
+Fast-forward
+ module2/task1/practice2_eltex-pg1-v1_part1.log |  356 ++++++++++
+ module2/task2/practice2_eltex-pg1-v1_part2.log | 2478 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ module2/task3/practice2_eltex-pg1-v1_part3.log |  193 +++++
+ 3 files changed, 3027 insertions(+)
+ create mode 100644 module2/task1/practice2_eltex-pg1-v1_part1.log
+ create mode 100644 module2/task2/practice2_eltex-pg1-v1_part2.log
+ create mode 100644 module2/task3/practice2_eltex-pg1-v1_part3.log
+
+root@eltex-practice2-pg1-v1:~/EltexPracticeModule1_clone# ls module2/task2
+practice2_eltex-pg1-v1_part2.log

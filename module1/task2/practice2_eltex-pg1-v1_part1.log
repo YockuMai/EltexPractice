@@ -1,0 +1,356 @@
+
+eltex-pg1-v1@eltex-2026-autumn:~$ ssh-keygen -t rsa -C "$USER@$(hostname)"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/eltex-pg1-v1/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/eltex-pg1-v1/.ssh/id_rsa
+Your public key has been saved in /home/eltex-pg1-v1/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:a7n5j491GbXf6IplPXIzonKDgozegTrY/jyurFP9wZY eltex-pg1-v1@eltex-2026-autumn
+The key's randomart image is:
++---[RSA 3072]----+
+|                 |
+|                 |
+|                .|
+|               ..|
+|   . . .S     .. |
+|  ... E  o   . +o|
+|.o.o.+ .+.  * X o|
+|+ooo+.o.oooO * + |
+|o*=+=. .o+*++..  |
++----[SHA256]-----+
+
+
+
+eltex-pg1-v1@eltex-2026-autumn:~$ ssh-copy-id root@172.16.9.175
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/eltex-pg1-v1/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@172.16.9.175's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'root@172.16.9.175'"
+and check to make sure that only the key(s) you wanted were added.
+
+
+
+eltex-pg1-v1@eltex-2026-autumn:~$ ssh root@172.16.9.175
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-55-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Oct 16 07:31:05 AM UTC 2026
+
+  System load:  0.0                Processes:              112
+  Usage of /:   41.6% of 14.66GB   Users logged in:        1
+  Memory usage: 8%                 IPv4 address for ens18: 172.16.9.175
+  Swap usage:   0%
+
+ * Canonical Workshop gives developers fast, composable, reproducible, and
+   secure developer environments that are perfect for agentic workflows.
+
+   https://ubuntu.com/workshop
+
+Expanded Security Maintenance for Applications is not enabled.
+
+105 updates can be applied immediately.
+1 of these updates is a standard security update.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '26.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+*** System restart required ***
+Last login: Fri Oct 16 07:25:10 2026 from 172.16.8.4
+root@eltex-practice2-pg1-v1:~#
+
+root@eltex-practice2-pg1-v1:~# echo "export MYUSER='eltex-pg1-v1'" >> ~/.bashrc
+
+root@eltex-practice2-pg1-v1:~# touch practice2_${MYUSER}_part1.log
+root@eltex-practice2-pg1-v1:~# ls
+practice2_eltex-pg1-v1_part1.log
+
+root@eltex-practice2-pg1-v1:~# useradd -m -s /bin/bash user1
+root@eltex-practice2-pg1-v1:~# passwd user1
+New password:
+Retype new password:
+passwd: password updated successfully
+
+root@eltex-practice2-pg1-v1:~# adduser user2
+info: Adding user `user2' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `user2' (1002) ...
+info: Adding new user `user2' (1002) with group `user2 (1002)' ...
+info: Creating home directory `/home/user2' ...
+info: Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for user2
+Enter the new value, or press ENTER for the default
+        Full Name []:
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+Is the information correct? [Y/n] y
+info: Adding new user `user2' to supplemental / extra groups `users' ...
+info: Adding user `user2' to group `users' ...
+
+root@eltex-practice2-pg1-v1:~# adduser user3
+info: Adding user `user3' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `user3' (1003) ...
+info: Adding new user `user3' (1003) with group `user3 (1003)' ...
+info: Creating home directory `/home/user3' ...
+info: Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for user3
+Enter the new value, or press ENTER for the default
+        Full Name []:
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+Is the information correct? [Y/n] y
+info: Adding new user `user3' to supplemental / extra groups `users' ...
+info: Adding user `user3' to group `users' ...
+
+root@eltex-practice2-pg1-v1:~# usermod -s /usr/sbin/nologin user3
+
+root@eltex-practice2-pg1-v1:~# su - user3
+This account is currently not available.
+root@eltex-practice2-pg1-v1:~# su -s /bin/bash user3
+user3@eltex-practice2-pg1-v1:/root$ exit
+exit
+root@eltex-practice2-pg1-v1:~#
+
+root@eltex-practice2-pg1-v1:~# groupadd newGroup
+root@eltex-practice2-pg1-v1:~# usermod -aG newGroup user1
+root@eltex-practice2-pg1-v1:~# usermod -aG newGroup user2
+root@eltex-practice2-pg1-v1:~# usermod -aG newGroup user3
+root@eltex-practice2-pg1-v1:~# groups user1 user2 user3
+user1 : user1 newGroup
+user2 : user2 users newGroup
+user3 : user3 users newGroup
+
+root@eltex-practice2-pg1-v1:~# mkdir -p /opt/share
+root@eltex-practice2-pg1-v1:~# ls -ld /opt/share
+drwxr-xr-x 2 root root 4096 Oct 16 08:01 /opt/share
+root@eltex-practice2-pg1-v1:~# chgrp newGroup /opt/share
+root@eltex-practice2-pg1-v1:~# ls -ld /opt/share
+drwxr-xr-x 2 root newGroup 4096 Oct 16 08:01 /opt/share
+root@eltex-practice2-pg1-v1:~# chmod u=rwx,g=rwxs,o= /opt/share
+root@eltex-practice2-pg1-v1:~# ls -ld /opt/share
+drwxrws--- 2 root newGroup 4096 Oct 16 08:01 /opt/share
+
+root@eltex-practice2-pg1-v1:~# echo 'umask u=rwx,g=rx,o=' >> /home/user1/.profile
+root@eltex-practice2-pg1-v1:~# su - user1 -c 'touch /opt/share/test_umask.txt; ls -l /opt/share/test_umask.txt'
+-rw-r----- 1 user1 newGroup 0 Oct 19 03:36 /opt/share/test_umask.txt
+
+root@eltex-practice2-pg1-v1:~# su - user1 -c 'echo "from user1" > /opt/share/user1.txt'
+root@eltex-practice2-pg1-v1:~# su - user2 -c 'echo "from user2" > /opt/share/user2.txt'
+root@eltex-practice2-pg1-v1:~# su -s /bin/bash user3 -c 'echo "from user3" > /opt/share/user3.txt'
+root@eltex-practice2-pg1-v1:~# su - user1 -c 'rm /opt/share/user2.txt'
+root@eltex-practice2-pg1-v1:~# ls /opt/share
+user1.txt  user3.txt
+root@eltex-practice2-pg1-v1:~# su - user2 -c 'rm /opt/share/user3.txt'
+root@eltex-practice2-pg1-v1:~# ls /opt/share
+user1.txt
+root@eltex-practice2-pg1-v1:~# su -s /bin/bash user3 -c 'rm /opt/share/user1.txt'
+rm: remove write-protected regular file '/opt/share/user1.txt'? y
+root@eltex-practice2-pg1-v1:~# ls /opt/share
+user1.txt
+root@eltex-practice2-pg1-v1:~# su -s /bin/bash user3 -c 'ls -l /opt/share/user1.txt'
+-rw-r----- 1 user1 newGroup 11 Oct 19 03:38 /opt/share/user1.txt
+Файл user1.txt нельзя удалить пользователями в этой же группе, так как до этого был прописан umask
+
+root@eltex-practice2-pg1-v1:~# chmod u=rwx,g=rwxs,o=,o+t /opt/share
+root@eltex-practice2-pg1-v1:~# ls -ld /opt/share/
+drwxrws--T 2 root newGroup 4096 Oct 19 03:40 /opt/share/
+root@eltex-practice2-pg1-v1:~# su - user2 -c 'echo "from user2" > /opt/share/user2.txt'
+root@eltex-practice2-pg1-v1:~# su -s /bin/bash user3 -c 'echo "from user3" > /opt/share/user3.txt'
+root@eltex-practice2-pg1-v1:~# ls /opt/share/
+user1.txt  user2.txt  user3.txt
+root@eltex-practice2-pg1-v1:~# su - user1 -c 'rm /opt/share/user2.txt'
+rm: cannot remove '/opt/share/user2.txt': Operation not permitted
+root@eltex-practice2-pg1-v1:~# su - user2 -c 'rm /opt/share/user3.txt'
+rm: cannot remove '/opt/share/user3.txt': Operation not permitted
+root@eltex-practice2-pg1-v1:~# su - user2 -c 'rm /opt/share/user2.txt'
+root@eltex-practice2-pg1-v1:~# ls /opt/share/
+user1.txt  user3.txt
+
+root@eltex-practice2-pg1-v1:~# echo "user1 ALL=(ALL) NOPASSWD: /bin/dmesg" >> /etc/sudoersroot@eltex-practice2-pg1-v1:~# cat > /usr/local/bin/show_dmesg.sh <<'EOF'
+Из-за того, что ядро Linux накладывает запрет на SUID для bash-скриптов, 
+будет написан и скомпилирован скрипт на языке C
+root@eltex-practice2-pg1-v1:~# apt install build-essential -y
+root@eltex-practice2-pg1-v1:~# touch /usr/local/bin/show_dmesg.c
+root@eltex-practice2-pg1-v1:~# nano /usr/local/bin/show_dmesg.c
+root@eltex-practice2-pg1-v1:~# cat /usr/local/bin/show_dmesg.c
+#include <unistd.h>
+#include <stdio.h>
+#include <errno.h>
+
+int main(void)
+{
+    char *const argv[] = { "/usr/bin/dmesg", NULL };
+    char *const envp[] = { NULL };
+
+    execve("/usr/bin/dmesg", argv, envp);
+    perror("execve");
+    return 1;
+}
+root@eltex-practice2-pg1-v1:~# gcc -O2 /usr/local/bin/show_dmesg.c -o /usr/local/bin/show_dmesg
+root@eltex-practice2-pg1-v1:~# chown root:user2 /usr/local/bin/show_dmesg
+root@eltex-practice2-pg1-v1:~# chmod u=rwxs,g=rxs,o= /usr/local/bin/show_dmesg
+root@eltex-practice2-pg1-v1:~# ls -la /usr/local/bin/show_dmesg
+-rwsr-s--- 1 root user2 16064 Oct 19 11:49 /usr/local/bin/show_dmesg
+root@eltex-practice2-pg1-v1:~# su - user1
+user1@eltex-practice2-pg1-v1:~$ sudo -n /bin/dmesg | head
+[    0.000000] Linux version 6.8.0-147-generic (buildd@lcy02-amd64-081) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #147-Ubuntu SMP PREEMPT_DYNAMIC Thu Sep 24 11:33:16 UTC 2026 (Ubuntu 6.8.0-147.147-generic 6.8.12)
+[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-147-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+[    0.000000] KERNEL supported cpus:
+[    0.000000]   Intel GenuineIntel
+[    0.000000]   AMD AuthenticAMD
+[    0.000000]   Hygon HygonGenuine
+[    0.000000]   Centaur CentaurHauls
+[    0.000000]   zhaoxin   Shanghai
+[    0.000000] BIOS-provided physical RAM map:
+[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
+user1@eltex-practice2-pg1-v1:~$ sudo -n cat /etc/shadow
+sudo: a password is required
+user2@eltex-practice2-pg1-v1:~$ /usr/local/bin/show_dmesg | head
+[    0.000000] Linux version 6.8.0-147-generic (buildd@lcy02-amd64-081) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #147-Ubuntu SMP PREEMPT_DYNAMIC Thu Sep 24 11:33:16 UTC 2026 (Ubuntu 6.8.0-147.147-generic 6.8.12)
+[    0.000000] Command line: BOOT_IMAGE=/vmlinuz-6.8.0-147-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+[    0.000000] KERNEL supported cpus:
+[    0.000000]   Intel GenuineIntel
+[    0.000000]   AMD AuthenticAMD
+[    0.000000]   Hygon HygonGenuine
+[    0.000000]   Centaur CentaurHauls
+[    0.000000]   zhaoxin   Shanghai
+[    0.000000] BIOS-provided physical RAM map:
+[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
+
+root@eltex-practice2-pg1-v1:~# chage -M 10 user1
+root@eltex-practice2-pg1-v1:~# chage -M 10 user2
+root@eltex-practice2-pg1-v1:~# chage -M 10 user3
+root@eltex-practice2-pg1-v1:~# chage -l user1
+Last password change                                    : Oct 19, 2026
+Password expires                                        : Oct 29, 2026
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 10
+Number of days of warning before password expires       : 7
+
+root@eltex-practice2-pg1-v1:~# echo "Анисимов Никита" >> /etc/motd
+root@eltex-practice2-pg1-v1:~# mkdir -p /root/etc_backup
+root@eltex-practice2-pg1-v1:~# rsync -a /etc/ etc_backup/
+root@eltex-practice2-pg1-v1:~# app install bzip2 p7zip-full
+root@eltex-practice2-pg1-v1:~# tar -czf etc_backup_gzip.tar.gz etc_backup
+root@eltex-practice2-pg1-v1:~# tar -cjf etc_backup_bzip2.tar.bz2 etc_backup
+root@eltex-practice2-pg1-v1:~# 7z a etc_backup_7zip.7z etc_backup
+
+root@eltex-practice2-pg1-v1:~# ls -lh
+total 1.6M
+drwxr-xr-x 109 root root 4.0K Oct 19 04:52 etc_backup
+-rw-r--r--   1 root root 441K Oct 19 05:19 etc_backup_7zip.7z
+-rw-r--r--   1 root root 527K Oct 19 05:17 etc_backup_bzip2.tar.bz2
+-rw-r--r--   1 root root 564K Oct 19 05:23 etc_backup_gzip.tar.gz
+-rw-r--r--   1 root root  11K Oct 19 05:44 practice2_eltex-pg1-v1_part1.log
+drwxr-xr-x   3 root root 4.0K Oct 19 05:24 tmp
+
+root@eltex-practice2-pg1-v1:~# date >> /etc/motd
+root@eltex-practice2-pg1-v1:~# rsync -a /etc/ etc_backup/
+root@eltex-practice2-pg1-v1:~# tar -czf etc_backup_gzip.tar.gz etc_backup
+
+root@eltex-practice2-pg1-v1:~# mkdir -p /tmp/etc_backup_bzip2_check
+root@eltex-practice2-pg1-v1:~# tar -xjf etc_backup_bzip2.tar.bz2 -C /tmp/etc_backup_bzip2_check
+root@eltex-practice2-pg1-v1:~# diff -r /tmp/etc_backup_bzip2_check/etc_backup /root/etc_backup
+diff -r /tmp/etc_backup_bzip2_check/etc_backup/motd /root/etc_backup/motd
+1a2
+> Mon Oct 19 05:20:56 AM UTC 2026
+diff: /tmp/etc_backup_bzip2_check/etc_backup/mtab: No such file or directory
+diff: /root/etc_backup/mtab: No such file or directory
+diff: /tmp/etc_backup_bzip2_check/etc_backup/os-release: No such file or directory
+diff: /root/etc_backup/os-release: No such file or directory
+diff: /tmp/etc_backup_bzip2_check/etc_backup/resolv.conf: No such file or directory
+diff: /root/etc_backup/resolv.conf: No such file or directory
+
+root@eltex-practice2-pg1-v1:~# mkdir -p etc_backup_gzip etc_backup_7zip
+root@eltex-practice2-pg1-v1:~# tar -xzf etc_backup_gzip.tar.gz -C etc_backup_gzip
+root@eltex-practice2-pg1-v1:~# 7z x /root/etc_backup_7zip.7z -o/root/etc_backup_7zip
+
+7-Zip 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20
+ 64-bit locale=en_US.UTF-8 Threads:2 OPEN_MAX:1024
+
+Scanning the drive for archives:
+1 file, 450645 bytes (441 KiB)
+
+Extracting archive: /root/etc_backup_7zip.7z
+--
+Path = /root/etc_backup_7zip.7z
+Type = 7z
+Physical Size = 450645
+Headers Size = 20633
+Method = LZMA2:3m
+Solid = +
+Blocks = 2
+
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/arptables : /usr/sbin/arptables-nft
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/arptables-restore : /usr/sbin/arptables-nft-restore
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/arptables-save : /usr/sbin/arptables-nft-save
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/awk : /usr/bin/gawk
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/awk.1.gz : /usr/share/man/man1/gawk.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/builtins.7.gz : /usr/share/man/man7/bash-builtins.7.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ebtables : /usr/sbin/ebtables-nft
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ebtables-restore : /usr/sbin/ebtables-nft-restore
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ebtables-save : /usr/sbin/ebtables-nft-save
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/editor : /bin/nano
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/editor.1.gz : /usr/share/man/man1/nano.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex : /usr/bin/vim.basic
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.1.gz : /usr/share/man/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.da.1.gz : /usr/share/man/da/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.de.1.gz : /usr/share/man/de/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.fr.1.gz : /usr/share/man/fr/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.it.1.gz : /usr/share/man/it/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.ja.1.gz : /usr/share/man/ja/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.pl.1.gz : /usr/share/man/pl/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.ru.1.gz : /usr/share/man/ru/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ex.tr.1.gz : /usr/share/man/tr/man1/vim.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ftp : /usr/bin/tnftp
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/ftp.1.gz : /usr/share/man/man1/tnftp.1.gz
+ERROR: Dangerous link path was ignored : etc_backup/alternatives/infobrowser : /usr/bin/info
+ERROR: Dangerous link path was ignored : etc_backup/vtrgb : /etc/alternatives/vtrgb
+
+Would you like to replace the existing file:
+  Path:     /root/etc_backup_7zip/etc_backup/xdg/systemd/user
+  Size:     0 bytes
+  Modified: 2026-10-19 05:52:02
+with the file from archive:
+  Path:     etc_backup/xdg/systemd/user
+  Size:     18 bytes (1 KiB)
+  Modified: 2024-10-17 17:15:16
+? (Y)es / (N)o / (A)lways / (S)kip all / A(u)to rename all / (Q)uit? A
+
+ERROR: Cannot delete output folder : errno=39 : Directory not empty : /root/etc_backup_7zip/etc_backup/xdg/systemd/user
+
+Sub items Errors: 369
+
+Archives with Errors: 1
+
+Sub items Errors: 369
+
+root@eltex-practice2-pg1-v1:~# diff etc_backup_gzip/etc_backup/motd etc_backup_7zip/etc_backup/motd
+2d1
+< Mon Oct 19 05:20:56 AM UTC 2026
