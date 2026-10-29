@@ -1,3 +1,4 @@
 test_get_permissions
 test_set_permissions
 test_parsers
+test_strings

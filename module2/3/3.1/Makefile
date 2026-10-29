@@ -40,9 +40,10 @@ TEST_BIN := $(TEST_SRC:.c=)
 TEST_DEP := $(TEST_BIN:=.d)
 
 # От каких .c проекта зависит каждый тест.
-PROJECT_DEPS_test_parsers  := parsers.c Strings.c
-PROJECT_DEPS_test_get_permissions := getPermissions.c Strings.c parsers.c
-PROJECT_DEPS_test_set_permissions := setPermissions.c Strings.c parsers.c
+PROJECT_DEPS_test_parsers := parsers.c Strings.c
+PROJECT_DEPS_test_set_permissions := setPermissions.c Strings.c
+PROJECT_DEPS_test_get_permissions := getPermissions.c parsers.c Strings.c
+PROJECT_DEPS_test_strings := Strings.c
 
 # Санитайзеры
 SAN_FLAGS := -fsanitize=address,undefined -fno-omit-frame-pointer
