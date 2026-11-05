@@ -96,7 +96,6 @@ void menu_run(const char *lib_dir) {
         else if (isinf(r))   printf("Результат: %sбесконечность\n", r < 0 ? "-" : "+");
         else                 printf("Результат: %g\n", r);
 
-        puts("Enter...");
         getchar();
         system("clear");
     }

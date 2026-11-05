@@ -1,5 +1,3 @@
-#include "Operation.h"
-
 const char *calc_name = "умножение";
 const char calc_symbol = '*';
 
