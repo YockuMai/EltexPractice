@@ -1,3 +1,5 @@
+#include "Operation.h"
+
 const char *calc_name = "вычитание";
 const char calc_symbol = '-';
 

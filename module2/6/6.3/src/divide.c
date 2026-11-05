@@ -1,3 +1,4 @@
+#include "Operation.h"
 #include <math.h>
 
 const char *calc_name = "деление";

@@ -1,3 +1,5 @@
+#include "Operation.h"
+
 const char *calc_name = "сложение";
 const char calc_symbol = '+';
 
