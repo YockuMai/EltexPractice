@@ -1,0 +1,51 @@
+# ---------- Артефакты сборки ----------
+build/
+*.o
+*.d
+*.a
+*.so
+*.so.*
+*.out
+main
+
+# ---------- ASan / UBSan ----------
+*.asan
+*.ubsan
+core
+core.*
+
+# ---------- Valgrind / профилирование ----------
+*.log
+vgcore.*
+callgrind.out.*
+massif.out.*
+perf.data
+perf.data.old
+
+# ---------- Отладочные символы ----------
+*.gdb
+*.debug
+
+# ---------- Временные и бэкапные файлы ----------
+*~
+*.swp
+*.swo
+*.swn
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.old
+.#*
+
+# VS Code
+.vscode/
+*.code-workspace
+
+
+# ---------- Системные файлы Linux ----------
+.DS_Store
+.directory
+Thumbs.db
+desktop.ini
