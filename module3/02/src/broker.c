@@ -13,10 +13,10 @@ struct sub_entry {
     char topic[MAX_TOPIC];
 };
 
-static struct sub_entry subs[MAX_SUBS];
+static struct sub_entry *subs = NULL;
 static int sub_count = 0;
 
-static pid_t pubs[MAX_PUBS];
+static pid_t *pubs = NULL;
 static int pub_count = 0;
 
 static volatile sig_atomic_t stop = 0;
@@ -26,11 +26,16 @@ static void add_sub(pid_t pid, const char *topic) {
         if (subs[i].pid == pid && my_strcmp(subs[i].topic, topic) == 0)
             return;
     }
-    if (sub_count < MAX_SUBS) {
-        subs[sub_count].pid = pid;
-        my_strncpy(subs[sub_count].topic, topic, MAX_TOPIC);
-        sub_count++;
+    struct sub_entry *grown = (struct sub_entry *)realloc(subs, (sub_count + 1) * sizeof(*grown));
+    if (!grown) {
+        fprintf(stderr, "[Брокер %d] Не хватает памяти для подписки\n",
+                (int)getpid());
+        return;
     }
+    subs = grown;
+    subs[sub_count].pid = pid;
+    my_strncpy(subs[sub_count].topic, topic, MAX_TOPIC);
+    sub_count++;
 }
 
 static void add_pub(pid_t pid) {
@@ -38,10 +43,15 @@ static void add_pub(pid_t pid) {
         if (pubs[i] == pid)
             return;
     }
-    if (pub_count < MAX_PUBS) {
-        pubs[pub_count] = pid;
-        pub_count++;
+    pid_t *grown = (pid_t *)realloc(pubs, (pub_count + 1) * sizeof(*grown));
+    if (!grown) {
+        fprintf(stderr, "[Брокер %d] Не хватает памяти для издателя\n",
+                (int)getpid());
+        return;
     }
+    pubs = grown;
+    pubs[pub_count] = pid;
+    pub_count++;
 }
 
 static void del_sub(pid_t pid, const char *topic) {
@@ -199,5 +209,13 @@ int broker_run() {
     // IPC_RMID - немедленно удаляет очередь сообщений, даже если процессы все еще используют ее
     msgctl(qid, IPC_RMID, NULL);
     printf("[Брокер %d] Очередь сообщений удалена\n", (int)getpid());
+
+    free(subs);
+    subs = NULL;
+    sub_count = 0;
+
+    free(pubs);
+    pubs = NULL;
+    pub_count = 0;
     return 0;
 }
