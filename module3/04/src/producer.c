@@ -59,7 +59,10 @@ void run_producer() {
         }
 
         // Захват ресурса
-        semop(semid, &lock_s, 1);
+        if (semop(semid, &lock_s, 1) == -1) {
+            perror("semop lock");
+            exit(1);
+        }
 
         long long current_off = ctrl->free_off;
         block *b = (block*)(base + current_off);
@@ -83,20 +86,32 @@ void run_producer() {
         prev_off = current_off;
         ctrl->free_off += block_size;
 
-        semop(semid, unlock_s, 2);
+        if (semop(semid, unlock_s, 2) == -1) {
+            perror("semop unlock");
+            exit(1);
+        }
 
         sleep(1);
     }
 
-    semop(semid, &lock_s, 1);
+    if (semop(semid, &lock_s, 1) == -1) {
+        perror("semop lock");
+        exit(1);
+    }
     ctrl->producer_done = 1;
-    semop(semid, unlock_s, 2);
+    if (semop(semid, unlock_s, 2) == -1) {
+        perror("semop unlock");
+        exit(1);
+    }
 
     printf("[Производитель] Генерация завершена. Ожидание потребителей...\n");
 
     // Ожидание потребителей
     while (!stop) {
-        semop(semid, &lock_s, 1);
+        if (semop(semid, &lock_s, 1) == -1) {
+            perror("semop lock");
+            exit(1);
+        }
         
         int all_processed = 1;
         long long off = ctrl->head_off;
@@ -110,7 +125,10 @@ void run_producer() {
             off = b->next_off;
         }
 
-        semop(semid, unlock_s, 2);
+        if (semop(semid, unlock_s, 2) == -1) {
+            perror("semop unlock");
+            exit(1);
+        }
 
         if (all_processed) {
             printf("[Производитель] Все наборы обработаны. Удаляю ресурсы.\n");

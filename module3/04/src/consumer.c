@@ -64,16 +64,25 @@ void run_consumer() {
                    getpid(), off, count, max, min);
             
             target->count = 0;
-            semop(semid, unlock_s, 2);
+            if (semop(semid, unlock_s, 2) == -1) {
+                perror("semop unlock");
+                exit(1);
+            }
             sleep(1);
         } 
         else {
             if (ctrl->producer_done) {
-                semop(semid, unlock_s, 2);
+                if (semop(semid, unlock_s, 2) == -1) {
+                    perror("semop unlock");
+                    exit(1);
+                }
                 printf("[Потребитель %d] Все наборы обработаны. Отключаюсь.\n", getpid());
                 break;
             } else {
-                semop(semid, unlock_s, 2);
+                if (semop(semid, unlock_s, 2) == -1) {
+                    perror("semop unlock");
+                    exit(1);
+                }
                 sleep(1);
             }
         }
