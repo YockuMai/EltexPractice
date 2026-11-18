@@ -91,7 +91,7 @@ void run_producer() {
             exit(1);
         }
 
-        sleep(1);
+        sleep(0.5);
     }
 
     if (semop(semid, &lock_s, 1) == -1) {
@@ -135,7 +135,7 @@ void run_producer() {
             break;
         }
 
-        sleep(1);
+        sleep(0.5);
     }
 
     if (stop)
