@@ -6,19 +6,19 @@
 #include <string.h>
 
 void* recv_thread(void* arg) {
-    chat_ctx* ctx = (chat_ctx*)arg;
+    chat_ctx* ctx = (chat_ctx*)arg; // Управляющая структура
 
-    char id[ID_SIZE], name[NAME_SIZE], type, text[BUF_SIZE];
+    char id[ID_SIZE], name[NAME_SIZE], type, text[BUF_SIZE]; // Формат сообщения
 
     while (ctx->running) {
         if (read_msg(ctx->sock_fd,
                      id, sizeof(id),
                      name, sizeof(name),
                      &type,
-                     text, sizeof(text)) != 0) {
+                     text, sizeof(text)) != 0) { // Читаем сообщение из сокета 
             continue;
         }
-        if (strcmp(id, ctx->my_id) == 0) continue;
+        if (strcmp(id, ctx->my_id) == 0) continue; // Если сообщение было создано нами
 
         switch (type) {
             case 'J': printf("\n%s Подключился\n> ", name); break;

@@ -13,22 +13,21 @@ int send_msg(int sock_fd, char type, const char* text, const char* my_id, const 
     char buf[BUF_SIZE];
 
     int n = snprintf(buf, sizeof(buf), "%s|%s|%c|%s",
-                     my_id, my_name, type, text ? text : "");
-    if (n < 0 || (size_t)n >= sizeof buf) {
+                     my_id, my_name, type, text ? text : ""); // Формат сообщения
+    if (n < 0 || n >= sizeof(buf)) {
         fprintf(stderr, "send_msg: сообщение слишком длинное\n");
         return -1;
     }
 
-    struct sockaddr_in dest = {0};
+    struct sockaddr_in dest = {0}; // Структура для IPv4
     dest.sin_family = AF_INET;
-    dest.sin_port = htons(PORT);
-    if (inet_pton(AF_INET, dest_addr, &dest.sin_addr) != 1) {
+    dest.sin_port = htons(PORT); // Перевод порта из порядка хоста в сетевой
+    if (inet_pton(AF_INET, dest_addr, &dest.sin_addr) != 1) { // Перевод строки IPv4 в бинарный вид
         perror("inet_pton");
         return -1;
     }
 
-    ssize_t sent = sendto(sock_fd, buf, (size_t)n, 0,
-                          (struct sockaddr*)&dest, sizeof(dest));
+    ssize_t sent = sendto(sock_fd, buf, (size_t)n, 0, (struct sockaddr*)&dest, sizeof(dest)); // Отправка сообщения в сокет
     if (sent < 0) {
         perror("sendto");
         return -1;
@@ -45,21 +44,20 @@ int read_msg(int sock_fd,
     struct sockaddr_in sender;
     socklen_t slen = sizeof sender;
 
-    ssize_t n = recvfrom(sock_fd, buf, sizeof buf - 1, 0,
-                         (struct sockaddr*)&sender, &slen);
+    ssize_t n = recvfrom(sock_fd, buf, sizeof buf - 1, 0, (struct sockaddr*)&sender, &slen); // Чтение сообщения из сокета
     if (n < 0) {
         perror("recvfrom");
         return -1;
     }
     buf[n] = '\0';
 
-    /* парсим: id|name|type|text */
+    // парсим: id|name|type|text
     char* p_id = buf;
     char* p_name = strchr(p_id, '|'); if (!p_name) return -1; *p_name++ = '\0';
     char* p_type = strchr(p_name, '|'); if (!p_type) return -1; *p_type++ = '\0';
     char* p_text = strchr(p_type, '|'); if (!p_text) return -1; *p_text++ = '\0';
 
-    /* проверка длин, чтобы не переполнить буферы вызывающего */
+    // проверка длин, чтобы не переполнить буферы вызывающего
     if (strlen(p_id) >= id_sz) return -1;
     if (strlen(p_name) >= name_sz) return -1;
     if (strlen(p_text) >= text_sz) return -1;

@@ -8,11 +8,11 @@
 #define NAME_SIZE 64
 
 typedef struct chat_ctx {
-    int sock_fd;
-    int running;
-    char my_id[ID_SIZE];
-    char my_name[NAME_SIZE];
-    const char* bcast_ip;
+    int sock_fd; // Дескриптор сокета
+    int running; // Запущен ли процесс
+    char my_id[ID_SIZE]; // Уникальный идентификатор процесс (pid + rand)
+    char my_name[NAME_SIZE]; // Имя, которое задаётся при запуске
+    const char* bcast_ip; // Сеть для широковещательной рассылки
 } chat_ctx;
 
 #endif
