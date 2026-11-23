@@ -9,7 +9,7 @@
 /* Формат сообщения:  <id>|<name>|<type>|<text>
     type = 'J' — подключился, 'L' — отключился, 'M' — обычное сообщение
 */
-int send_msg(int sock_fd, char type, const char* text, const char* my_id, const char* my_name) {
+int send_msg(int sock_fd, char type, const char* text, const char* my_id, const char* my_name, const char* dest_addr) {
     char buf[BUF_SIZE];
 
     int n = snprintf(buf, sizeof(buf), "%s|%s|%c|%s",
@@ -22,7 +22,7 @@ int send_msg(int sock_fd, char type, const char* text, const char* my_id, const 
     struct sockaddr_in dest = {0};
     dest.sin_family = AF_INET;
     dest.sin_port = htons(PORT);
-    if (inet_pton(AF_INET, BROADCAST_ADDR, &dest.sin_addr) != 1) {
+    if (inet_pton(AF_INET, dest_addr, &dest.sin_addr) != 1) {
         perror("inet_pton");
         return -1;
     }

@@ -12,6 +12,7 @@ typedef struct chat_ctx {
     int running;
     char my_id[ID_SIZE];
     char my_name[NAME_SIZE];
+    const char* bcast_ip;
 } chat_ctx;
 
 #endif

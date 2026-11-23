@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 int send_msg(int sock_fd, char type, const char* text,
-             const char* my_id, const char* my_name);
+             const char* my_id, const char* my_name, const char* dest_addr);
 
 int read_msg(int sock_fd,
              char* id, size_t id_sz,
