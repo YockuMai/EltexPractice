@@ -78,23 +78,23 @@ int run_server(int port) {
             if (!(pfds[i + 1].revents & (POLLIN | POLLHUP | POLLERR))) continue;
             struct client* c = &g_clients[i];
 
-            int n = recv(c->fd, c->inbuf + c->inlen, sizeof(c->inbuf - c->inlen), 0);
+            ssize_t n = recv(c->fd, c->inbuf + c->inlen, sizeof(c->inbuf) - c->inlen, 0);
             if (n <= 0) {
                 printf("Клиент отключился (%d всего)\n", g_n - 1);
                 fflush(stdout);
                 drop_client(i);
                 continue;
             }
-            c->inlen += n;
+            c->inlen += (size_t)n;
 
             size_t off = 0;
-            int bad = 0;
-            while (c->inlen - off >= HDR_SIZE) {
+            int    bad = 0;
+            while (c->inlen - off >= (size_t)HDR_SIZE) {
                 msg_hdr h;
                 memcpy(&h, c->inbuf + off, HDR_SIZE);
-                int sz = ntohl(h.size);
+                uint32_t sz = ntohl(h.size);                  /* было int */
                 if (sz > CHUNK_SIZE) { bad = 1; break; }
-                if (c->inlen - off < (HDR_SIZE + sz)) break;
+                if (c->inlen - off < (size_t)(HDR_SIZE + sz)) break;
                 relay(i, c->inbuf + off, HDR_SIZE + sz);
                 off += HDR_SIZE + sz;
             }

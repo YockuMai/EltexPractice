@@ -49,9 +49,7 @@ int send_file(int sock, const char* sender, const char* path) {
     base = base ? base + 1 : path;
 
     // Отправка имени файла
-    char info[NAME_SIZE];
-    snprintf(info, sizeof(info), "%s|%s", sender, base);
-    if (send_msg(sock, 'F', "", info, strlen(info)) < 0) {
+    if (send_msg(sock, 'F', sender, base, (uint32_t)strlen(base)) < 0) {
         close(fd); return -1;
     }
 

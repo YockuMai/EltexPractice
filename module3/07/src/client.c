@@ -62,19 +62,23 @@ static void handle_frame(const struct msg_hdr* h, const char* payload, uint32_t 
         break;
 
     case 'F': {
-        char* bar = strchr(name, '|');
+        // name = sender (из заголовка), payload = имя файла
         const char* sender = name;
-        const char* fname  = bar ? bar + 1 : name;
-        if (bar) *bar = '\0';
-
+        
+        char fname[CHUNK_SIZE + 1];
+        size_t flen = (sz < CHUNK_SIZE) ? sz : CHUNK_SIZE;
+        memcpy(fname, payload, flen);
+        fname[flen] = '\0';
+        if (flen == 0) { printf("\n[пустое имя файла]\n> "); break; }
+        
         struct incoming* s = find_slot(sender, 1);
         if (!s) { printf("\n[Слишком много входящих сообщений]\n> "); break; }
         if (s->active) { fclose(s->fp); s->active = 0; }
-
+        
         snprintf(s->fname, sizeof s->fname, "recv_%s_%s", sender, fname);
         s->fp = fopen(s->fname, "wb");
         if (!s->fp) { perror("fopen"); break; }
-
+        
         strncpy(s->sender, sender, NAME_SIZE - 1);
         s->sender[NAME_SIZE - 1] = '\0';
         s->active = 1;
