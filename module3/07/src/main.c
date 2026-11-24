@@ -7,7 +7,7 @@
 
 static void usage(const char* p) {
     fprintf(stderr,
-        "usage:\n"
+        "Использование:\n"
         "  %s -s [-p PORT] run server\n"
         "  %s -c -n NAME [-h HOST] [-p PORT] run client\n", p, p);
 }
